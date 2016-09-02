@@ -1,0 +1,115 @@
+<link rel="stylesheet" href="bootstrap-3.3.5-dist\css\bootstrap.css"/>
+<link rel="stylesheet" href="font-awesome-4.6.3\css\font-awesome.css"/>
+<script src="js/jquery-3.0.0.min.js"></script>
+<script src="js/jquery.color.js"></script>
+
+<html>
+<style>
+.baikuang{
+width: 60%;
+margin:auto;
+margin-top:15%;
+border-radius:5px;
+
+}
+.tubiao{
+  
+  border: 2px;
+  background-color: grey;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+  color: white;
+  text-align: center;
+  padding: 1%;
+  font-size: 30px;
+  margin-bottom: 8%;
+}
+
+.yinhao{
+  margin-top:5%;
+  font-size:30px;
+}
+.exit{
+  margin-left: 70%;
+  font-size: 20px;
+}
+
+#tu1{
+  margin-left: 2%;
+  margin-top:16%;
+}
+#tu1{
+  margin-left: 12%;
+  margin-top:13%;
+}
+#newquote{
+margin-left: 45%;
+margin-top:-5%;
+}
+</style>
+
+<body>
+
+<div class="baikuang well" >
+<div class="yinhao" id="text">
+  <i class="fa fa-quote-left yinhao"aria-hidden="true"></i>
+  <span id="wen"></span></div>
+  <div >
+  <span class="exit"></span>
+</div>
+
+<div>
+<i class="fa fa-twitter tubiao"  id="tu1"></i>
+<i class="fa fa-tumblr tubiao" id="tu2"></i>
+<button id = "newquote" class = "btn btn-lg ">New quote</button>
+</div>
+
+</div>
+
+<div class="text-center">
+  <a href="#"  style="color:white; text-decoration:none" >by wujiajia</a>
+</div>
+
+</body >
+
+<script>
+$(function() {
+ plus();
+});
+
+$('#newquote').click(function() {
+plus();
+ });
+
+ var colors = ['aqua','red', 'blue', 'green', 'gray','black','fuchsia','lime','maroon','navy','olive','purple','silver','teal','yellow'];
+ var color="gray";
+ var randColor;
+ function plus() {
+   $.ajax({
+      beforeSend: function(request) {
+          request.setRequestHeader("apikey", '');
+      },
+      dataType: "json",
+      url: 'http://apis.baidu.com/acman/zhaiyanapi/tcrand?fangfa=json',
+      success: function(data) {
+          $("#wen,.exit,.yinhao").fadeOut(1000,function(){
+          $('#wen').html(data.taici);
+          $('.exit').html(data.source);
+          $('body,#tu1,#tu2,#newquote').css("background-color", randColor);
+          $('#text,.exit').css('color', randColor);
+          $("#wen,.exit,.yinhao").fadeIn(1000);
+        });
+      }
+    });
+
+    do {
+      randColor = colors[Math.floor(Math.random() * colors.length)];
+    } while (color == randColor);
+    $("body,#tu1,#tu2,#newquote").animate({backgroundColor: randColor},1000);
+    $('body,#tu1,#tu2,#newquote').css("background-color", randColor);
+    color = randColor;
+ };
+
+</script>
+</html>
